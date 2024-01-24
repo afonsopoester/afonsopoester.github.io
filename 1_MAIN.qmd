@@ -9,5 +9,3 @@ Hello, my name is João Afonso Poester-Carvalho and I am finishing my graduate d
 During much of my graduation, I focused on studying programming and GIS tools to solve problems associated with my work.
 
 I am much interested in studying Statistical and Machine Learning Models and their applications to ecological data, especially to conservation focus.
-
-a
