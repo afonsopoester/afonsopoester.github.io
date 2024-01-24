@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "1_MAIN.html",
+    "href": "1_MAIN.html",
+    "title": "Main",
+    "section": "",
+    "text": "Hello, my name is João Afonso Poester-Carvalho and I am finishing my graduate degree in Biological Sciences (Universidade Federal do Rio Grande - FURG). Currently, I am focused on Biogeography and species distribution patterns. I use techniques such as Endemicity Analysis and Hierarchical Clustering to better understand species distribution patterns across the Neotropics.\nDuring much of my graduation, I focused on studying programming and GIS tools to solve problems associated with my work.\nI am much interested in studying Statistical and Machine Learning Models and their applications to ecological data, especially to conservation focus."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "2_Porfolio.html",
+    "href": "2_Porfolio.html",
+    "title": "Portfolio and Exercises",
+    "section": "",
+    "text": "In my GitHub pages I developed some small coding exercises. Most of these are applications of algorithms I have studied or projects from websites such as Kaggle or DataCamp."
+  }
+]
