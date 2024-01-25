@@ -26,5 +26,12 @@
     "title": "Publications",
     "section": "",
     "text": "Articles\n\nPoester-Carvalho, J. A.; Barão, K.; Costa, L. G.; Ferrari, A. (2023). Areas of endemism and sampling bias of Pentatomidae (Heteroptera) in the Americas. Journal of Insect Conservation, 27(5), 781–794."
+  },
+  {
+    "objectID": "1_MAIN.html#skills",
+    "href": "1_MAIN.html#skills",
+    "title": "João Afonso Poester-Carvalho",
+    "section": "Skills",
+    "text": "Skills\nI am especially interested and continuously developing my skills on:\n\nR Programming\n\nGeneral dataviz techniques\nQuarto projects (such as this website!)\nInteractive reports (Reactable; Leaflet)\n\nQGIS map building\nGoogle Earth Engine Programming\nStatistical techniques:\n\nFrom the most basic Linear Models to Generalised Linear Mixed Models\n\nMachine Learning Algorithms\n\nRandom Forests\nBoosted Regression Trees\nSupport Machine Vector"
   }
 ]
