@@ -20,6 +20,7 @@ I am especially interested and continuously developing my skills on:
   - General dataviz techniques
   - Quarto projects (such as this website!)
   - Interactive reports (Reactable; Leaflet)
+  - Integration with Git and Github (version control, etc.)
 
 - QGIS map building
 
