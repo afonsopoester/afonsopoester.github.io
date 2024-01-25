@@ -32,6 +32,10 @@
     "href": "1_MAIN.html#skills",
     "title": "João Afonso Poester-Carvalho",
     "section": "Skills",
+<<<<<<< HEAD
     "text": "Skills\nI am especially interested and continuously developing my skills on:\n\nR Programming\n\nGeneral dataviz techniques (working on these in my GitHub page!)\nQuarto projects (such as this website!)\nSCSS styling\nInteractive reports (Reactable; Leaflet)\nIntegration with Git and Github (version control, etc.)\n\nQGIS map building\nGoogle Earth Engine Programming\nStatistical techniques:\n\nSimple and Multivarite Linear Models\nGeneralised Linear Models\nMixed Models\nClustering Analysis (UPGMA; WPGMA; k-Means) - I mastered these techniques during my Graduation to perform Biogeographical Regionalization\nDimensionality Reduction Analysis (PCA)\n\nMachine Learning Algorithms\n\nRandom Forests\nBoosted Regression Trees\nSupport Machine Vector"
+=======
+    "text": "Skills\nI am especially interested and continuously developing my skills on:\n\nR Programming\n\nGeneral dataviz techniques\nQuarto projects (such as this website!)\nInteractive reports (Reactable; Leaflet)\nIntegration with Git and Github (version control, etc.)\n\nQGIS map building\nGoogle Earth Engine Programming\nStatistical techniques:\n\nFrom the most basic Linear Models to Generalised Linear Mixed Models\n\nMachine Learning Algorithms\n\nRandom Forests\nBoosted Regression Trees\nSupport Machine Vector"
+>>>>>>> cc94f587999123b467e5319587bc137ce77d4c47
   }
 ]
