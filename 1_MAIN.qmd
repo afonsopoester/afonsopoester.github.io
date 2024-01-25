@@ -1,12 +1,12 @@
 ---
 title: "João Afonso Poester-Carvalho"
+subtitle: "Biologist"
 ---
-
-## Biologist
 
 ![](0_foto.png){width=300}
 
-Hello, my name is João Afonso Poester-Carvalho and I am finishing my graduate degree in Biological Sciences (Universidade Federal do Rio Grande - FURG). Currently, I am focused on Biogeography and species distribution patterns. I use techniques such as Endemicity Analysis and Hierarchical Clustering to better understand species distribution patterns across the Neotropics.
+Hello, my name is João Afonso Poester-Carvalho and I am finishing my graduate degree in Biological Sciences (Universidade Federal do Rio Grande - FURG). 
+Currently, I am focused on Biogeography and species distribution patterns (e.g. Poester-Carvalho et al. 2023). I use techniques such as Endemicity Analysis and Hierarchical Clustering to better understand species distribution patterns across the Neotropics.
 
 During much of my graduation, I focused on studying programming and GIS tools to solve problems associated with my work.
 
@@ -17,16 +17,22 @@ I am much interested in studying Statistical and Machine Learning Models and the
 I am especially interested and continuously developing my skills on:
 
 - R Programming
-  - General dataviz techniques
+  - General dataviz techniques (working on these in my GitHub page!)
   - Quarto projects (such as this website!)
+  - SCSS styling
   - Interactive reports (Reactable; Leaflet)
+  - Integration with Git and Github (version control, etc.)
 
 - QGIS map building
 
 - Google Earth Engine Programming
 
 - Statistical techniques:
-    - From the most basic Linear Models to Generalised Linear Mixed Models
+    - Simple and Multivarite Linear Models
+    - Generalised Linear Models
+    - Mixed Models
+    - Clustering Analysis (UPGMA; WPGMA; k-Means) - I mastered these techniques during my Graduation to perform Biogeographical Regionalization
+    - Dimensionality Reduction Analysis (PCA)
     
 - Machine Learning Algorithms 
     - Random Forests

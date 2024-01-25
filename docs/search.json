@@ -4,7 +4,7 @@
     "href": "1_MAIN.html",
     "title": "João Afonso Poester-Carvalho",
     "section": "",
-    "text": "Hello, my name is João Afonso Poester-Carvalho and I am finishing my graduate degree in Biological Sciences (Universidade Federal do Rio Grande - FURG). Currently, I am focused on Biogeography and species distribution patterns. I use techniques such as Endemicity Analysis and Hierarchical Clustering to better understand species distribution patterns across the Neotropics.\nDuring much of my graduation, I focused on studying programming and GIS tools to solve problems associated with my work.\nI am much interested in studying Statistical and Machine Learning Models and their applications to ecological data, especially to conservation focus."
+    "text": "Hello, my name is João Afonso Poester-Carvalho and I am finishing my graduate degree in Biological Sciences (Universidade Federal do Rio Grande - FURG). Currently, I am focused on Biogeography and species distribution patterns (e.g. Poester-Carvalho et al. 2023). I use techniques such as Endemicity Analysis and Hierarchical Clustering to better understand species distribution patterns across the Neotropics.\nDuring much of my graduation, I focused on studying programming and GIS tools to solve problems associated with my work.\nI am much interested in studying Statistical and Machine Learning Models and their applications to ecological data, especially to conservation focus."
   },
   {
     "objectID": "1_MAIN.html#biologist",
@@ -32,6 +32,6 @@
     "href": "1_MAIN.html#skills",
     "title": "João Afonso Poester-Carvalho",
     "section": "Skills",
-    "text": "Skills\nI am especially interested and continuously developing my skills on:\n\nR Programming\n\nGeneral dataviz techniques\nQuarto projects (such as this website!)\nInteractive reports (Reactable; Leaflet)\n\nQGIS map building\nGoogle Earth Engine Programming\nStatistical techniques:\n\nFrom the most basic Linear Models to Generalised Linear Mixed Models\n\nMachine Learning Algorithms\n\nRandom Forests\nBoosted Regression Trees\nSupport Machine Vector"
+    "text": "Skills\nI am especially interested and continuously developing my skills on:\n\nR Programming\n\nGeneral dataviz techniques (working on these in my GitHub page!)\nQuarto projects (such as this website!)\nSCSS styling\nInteractive reports (Reactable; Leaflet)\nIntegration with Git and Github (version control, etc.)\n\nQGIS map building\nGoogle Earth Engine Programming\nStatistical techniques:\n\nSimple and Multivarite Linear Models\nGeneralised Linear Models\nMixed Models\nClustering Analysis (UPGMA; WPGMA; k-Means) - I mastered these techniques during my Graduation to perform Biogeographical Regionalization\nDimensionality Reduction Analysis (PCA)\n\nMachine Learning Algorithms\n\nRandom Forests\nBoosted Regression Trees\nSupport Machine Vector"
   }
 ]
