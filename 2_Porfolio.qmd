@@ -13,6 +13,10 @@ In my GitHub pages I developed some small coding exercises. Most of these are ap
 library(tidyverse)
 library(janitor)
 
+library(tidyverse)
+library(janitor)
+
+
 cursos <- read.csv("portfolio_data/cursos_graduacao.csv")
 cursos <- cursos %>%
   clean_names() %>%
@@ -45,4 +49,136 @@ cursos %>%
       plot.background = element_rect(fill = "grey", colour = NA),
       plot.caption = element_text(hjust = -0.25) 
     )
+```
+
+
+## Premier League teams home and away
+
+```{r}
+#| warning: false
+
+library(tidyverse)
+library(ggbump)
+
+soccer <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-04-04/soccer21-22.csv')
+
+away_vic <- soccer %>%
+  group_by(AwayTeam) %>%
+  summarise(vic_away = sum(FTR == "A")) %>%
+  arrange(desc(vic_away)) %>%
+  rownames_to_column(var = "vic_away_rank") %>%
+  rename(team = AwayTeam) %>%
+  select(-vic_away)
+  
+
+home_vic <- soccer %>%
+  group_by(HomeTeam) %>%
+  summarise(vic_home = sum(FTR == "H")) %>%
+  arrange(desc(vic_home)) %>%
+  rownames_to_column(var = "vic_home_rank") %>%
+  rename(team = HomeTeam) %>%
+  select(-vic_home)
+
+victories <- merge(home_vic, away_vic, by = "team") %>%
+  mutate(
+    vic_home_rank = as.numeric(vic_home_rank),
+    vic_away_rank = as.numeric(vic_away_rank)
+  ) %>%
+  arrange(vic_home_rank) %>%
+  pivot_longer(
+    cols = c("vic_home_rank", "vic_away_rank"),
+    names_to = "home_away",
+    values_to = "rank"
+  ) %>%
+  mutate(
+    home_away_enc = as.integer(fct_rev(factor(home_away)))
+  )
+
+victories %>%
+  ggplot(aes(home_away_enc, rank, col = team)) +
+  geom_point(shape = "|", stroke = 5) +
+  ggbump::geom_bump(linewidth = 1.5) +
+  geom_text(
+    data = victories %>% filter(home_away_enc == 1),
+    aes(label = team),
+    hjust = 1,
+    nudge_x = -0.1,
+    size = 4,
+    fontface = "bold"
+  ) +
+  geom_text(
+    data = victories %>% filter(home_away_enc == 2),
+    aes(label = team),
+    hjust = 0,
+    nudge_x = 0.1,
+    size = 4,
+    fontface = "bold"
+  ) +
+  scale_y_reverse(breaks = 1:20) +
+  scale_x_continuous(breaks = 1:2, labels = c("Victories Home Rank", "Victories Away Rank")) +
+  coord_cartesian(xlim = c(0.5, 2.5)) +
+  theme_minimal() +
+  labs(
+    title = "Best defenders vs best visitors in Premier League 21/22",
+    caption = "2023-04-04 Tidytuesday data"
+  ) +
+  theme(
+    axis.title = element_blank(),
+    
+    plot.background = element_rect(fill = "#f5ede4", colour = NA),
+    plot.margin = margin(t = 2, b =4, l = 5, r = 5, unit = "mm"),
+    
+    panel.grid = element_blank(),
+    
+    legend.position = "none"
+  )
+```
+
+
+## Board games average rating
+
+``` {r}
+#| warning: false
+
+library(tidyverse)
+
+board_games <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv")
+
+board_games %>%
+  mutate(
+    decade = case_when(
+      year_published >= 1950 & year_published <=1959 ~ 1950,
+      year_published >= 1960 & year_published <=1969 ~ 1960,
+      year_published >= 1970 & year_published <=1979 ~ 1970,
+      year_published >= 1980 & year_published <=1989 ~ 1980,
+      year_published >= 1990 & year_published <=1999 ~ 1990,
+      year_published >= 2000 & year_published <=2009 ~ 2000,
+      year_published >= 2010 & year_published <=2019 ~ 2010,
+      year_published >= 2020 ~ 2020,
+    )
+  ) %>%
+  ggplot(aes(x = average_rating, fill = factor(decade))) +
+    geom_density() +
+    scale_y_continuous(
+      name = element_blank(),
+      breaks = NULL
+    ) +
+    scale_x_continuous(
+      name = "Average Rating",
+      breaks = c(0:10)
+    ) +
+    scale_fill_brewer(
+      name = "Decade",
+      palette = "Set2"
+    ) +
+    facet_wrap(~decade, ncol = 1) +
+    theme_minimal() +
+    labs(
+      title = "Average Rating of Board Games Across Decades"
+    ) +
+    theme(
+      plot.background = element_blank(),
+      panel.grid = element_blank()
+    )
+    
 ```
