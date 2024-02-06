@@ -132,6 +132,7 @@ victories %>%
     
     legend.position = "none"
   )
+
 ```
 
 
@@ -181,4 +182,5 @@ board_games %>%
       panel.grid = element_blank()
     )
     
+
 ```

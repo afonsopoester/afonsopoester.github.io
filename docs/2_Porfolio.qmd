@@ -1,5 +1,0 @@
----
-title: "Portfolio and Exercises"
----
-
-In my GitHub pages I developed some small coding exercises. Most of these are applications of algorithms I have studied or projects from websites such as Kaggle or DataCamp. 
