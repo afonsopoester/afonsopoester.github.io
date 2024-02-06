@@ -15,7 +15,8 @@ website:
     right:
       - href: 1_MAIN.qmd
         text: Home
-      - 1_Publications.qmd
+      - href: 1_Publications.qmd
+        text: Publications
       - href: 2_Porfolio.qmd
         text: Portfolio and Exercises
       - 3_CV.qmd
