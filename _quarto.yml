@@ -1,11 +1,6 @@
 project:
   type: website
   output-dir: docs
-  render: 
-    - 1_MAIN.qmd
-    - 1_Publications.qmd
-    - 2_Porfolio.qmd
-    - 3_CV.qmd
 
 website:
   title: "João Afonso Poester-Carvalho"
@@ -18,7 +13,7 @@ website:
       - href: 1_Publications.qmd
         text: Publications
       - href: 2_Porfolio.qmd
-        text: Portfolio and Exercises
+        text: Portfolio
       - href: 3_CV.qmd
         text: CV
       - icon: github
