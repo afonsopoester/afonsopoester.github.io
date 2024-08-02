@@ -1,0 +1,17 @@
+{
+  "hash": "e48dad0c3bfcacd2e0f81b06370ddd9c",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Brazilian Gradute Courses\"\ndescription: \"Post description\"\nauthor: \"João Afonso Poester-Carvalho\"\ndate: \"8/2/2024\"\n---\n\n\n## Brazilian Gradute Courses\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nlibrary(janitor)\n\nlibrary(tidyverse)\nlibrary(janitor)\n\n\ncursos <- read.csv(\"cursos_graduacao.csv\")\ncursos <- cursos %>%\n  clean_names() %>%\n  pivot_longer(!c(ano), names_to = \"modalidade\", values_to = \"n\") %>%\n  as.data.frame()\n\ncursos %>% \n  group_by(ano) %>%\n  mutate(perc = proportions(n)) %>%\n  ggplot(aes(x = ano, y = perc, fill = modalidade)) +\n    geom_area() +\n    theme_minimal() +\n    scale_x_continuous(\n      name = \"Ano\",\n      breaks = c(2012:2022)\n    ) +\n    scale_y_continuous(\n      name = \"Porcentagem\",\n      labels = scales::percent\n    ) +\n    scale_fill_brewer(\n      name = \"Modalidade\",\n      palette = \"Dark2\",\n      labels = c(\"Bacharelado Presencial\", \"Bacharelado Distância\", \"Licenciatura Presencial\", \"Licenciatura Distância\", \"Tecnológico Presencial\", \"Tecnológico Distância\")\n    ) +\n    labs(\n      caption = \"Dados: Censo do Ensino Superior 2022 - INEP\"\n    ) +\n    theme(\n      plot.background = element_rect(fill = \"grey\", colour = NA),\n      plot.caption = element_text(hjust = -0.25) \n    )\n```\n\n::: {.cell-output-display}\n![](post_1_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n:::\n",
+    "supporting": [
+      "post_1_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

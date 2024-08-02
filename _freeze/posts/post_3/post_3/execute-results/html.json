@@ -1,0 +1,17 @@
+{
+  "hash": "e6e66c44c9f321642825dfd6bb6abcf9",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Board games average rating\"\ndescription: \"Post description\"\nauthor: \"João Afonso Poester-Carvalho\"\ndate: \"8/2/2024\"\n---\n\n\n## Board games average rating\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\n\nboard_games <- readr::read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv\")\n\nboard_games %>%\n  mutate(\n    decade = case_when(\n      year_published >= 1950 & year_published <=1959 ~ 1950,\n      year_published >= 1960 & year_published <=1969 ~ 1960,\n      year_published >= 1970 & year_published <=1979 ~ 1970,\n      year_published >= 1980 & year_published <=1989 ~ 1980,\n      year_published >= 1990 & year_published <=1999 ~ 1990,\n      year_published >= 2000 & year_published <=2009 ~ 2000,\n      year_published >= 2010 & year_published <=2019 ~ 2010,\n      year_published >= 2020 ~ 2020,\n    )\n  ) %>%\n  ggplot(aes(x = average_rating, fill = factor(decade))) +\n    geom_density() +\n    scale_y_continuous(\n      name = element_blank(),\n      breaks = NULL\n    ) +\n    scale_x_continuous(\n      name = \"Average Rating\",\n      breaks = c(0:10)\n    ) +\n    scale_fill_brewer(\n      name = \"Decade\",\n      palette = \"Set2\"\n    ) +\n    facet_wrap(~decade, ncol = 1) +\n    theme_minimal() +\n    labs(\n      title = \"Average Rating of Board Games Across Decades\"\n    ) +\n    theme(\n      plot.background = element_blank(),\n      panel.grid = element_blank()\n    )\n```\n\n::: {.cell-output-display}\n![](post_3_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n:::",
+    "supporting": [
+      "post_3_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

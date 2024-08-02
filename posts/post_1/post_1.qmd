@@ -1,0 +1,52 @@
+---
+title: "Brazilian Gradute Courses"
+description: "Post description"
+author: "João Afonso Poester-Carvalho"
+date: "8/2/2024"
+---
+
+## Brazilian Gradute Courses
+
+``` {r}
+#| warning: false
+
+library(tidyverse)
+library(janitor)
+
+library(tidyverse)
+library(janitor)
+
+
+cursos <- read.csv("cursos_graduacao.csv")
+cursos <- cursos %>%
+  clean_names() %>%
+  pivot_longer(!c(ano), names_to = "modalidade", values_to = "n") %>%
+  as.data.frame()
+
+cursos %>% 
+  group_by(ano) %>%
+  mutate(perc = proportions(n)) %>%
+  ggplot(aes(x = ano, y = perc, fill = modalidade)) +
+    geom_area() +
+    theme_minimal() +
+    scale_x_continuous(
+      name = "Ano",
+      breaks = c(2012:2022)
+    ) +
+    scale_y_continuous(
+      name = "Porcentagem",
+      labels = scales::percent
+    ) +
+    scale_fill_brewer(
+      name = "Modalidade",
+      palette = "Dark2",
+      labels = c("Bacharelado Presencial", "Bacharelado Distância", "Licenciatura Presencial", "Licenciatura Distância", "Tecnológico Presencial", "Tecnológico Distância")
+    ) +
+    labs(
+      caption = "Dados: Censo do Ensino Superior 2022 - INEP"
+    ) +
+    theme(
+      plot.background = element_rect(fill = "grey", colour = NA),
+      plot.caption = element_text(hjust = -0.25) 
+    )
+```

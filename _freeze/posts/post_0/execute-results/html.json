@@ -1,0 +1,17 @@
+{
+  "hash": "46387e29378c588c46381542ffb58d9d",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"My Post\"\ndescription: \"Post description\"\nauthor: \"João Afonso Poester-Carvalho\"\ndate: \"8/2/2024\"\ndraft: true\n---\n\n\n## Spiders Sexual Dimorphism\n\nExercise from the incredible book [\"Analises Ecológicas no R\"](https://analises-ecologicas.netlify.app/)\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(ggpubr)\nlibrary(tidyverse)\nlibrary(ecodados)\n\nspider <- Cap7_exercicio1\n\nt.test(Tamanho ~ Sexo, data = spider, var.equal = TRUE)\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n\n\tTwo Sample t-test\n\ndata:  Tamanho by Sexo\nt = 2.2756, df = 28, p-value = 0.03072\nalternative hypothesis: true difference in means between group f and group m is not equal to 0\n95 percent confidence interval:\n 0.2356113 4.4843887\nsample estimates:\nmean in group f mean in group m \n          10.08            7.72 \n```\n\n\n:::\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\nspider %>%\n  ggplot(aes(x = Sexo, y = Tamanho, color = Sexo)) +\n  geom_boxplot(fill = c(\"darkorange\", \"cyan4\"), color = \"black\") +\n  geom_jitter(shape = 16, cex = 5, color = \"black\") +\n  scale_x_discrete(name = \"Sex\",\n                   labels = c(\"Female\", \"Male\")) +\n  scale_y_continuous(\n    name = \"Size\"\n  ) +\n  theme_bw() +\n  stat_compare_means(method = \"t.test\",\n                     label.x = 1.4,\n                     label.y = 14)\n```\n\n::: {.cell-output-display}\n![](post_0_files/figure-html/unnamed-chunk-2-1.png){width=672}\n:::\n:::\n",
+    "supporting": [
+      "post_0_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
