@@ -1,7 +1,0 @@
----
-title: "Publications"
----
-
-# Articles
-
-1. Poester-Carvalho, J. A.; Barão, K.; Costa, L. G.; Ferrari, A. (2023). [Areas of endemism and sampling bias of Pentatomidae (Heteroptera) in the Americas.](http://dx.doi.org/10.1007/s10841-023-00497-5) Journal of Insect Conservation, 27(5), 781–794. 
