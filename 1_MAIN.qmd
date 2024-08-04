@@ -53,11 +53,9 @@ I am especially interested and continuously developing my skills on:
 
     -   Simple and Multivariate Generalized Linear Models
 
-    -   Mixed Models
-
     -   Multivariate Clustering and Ordination Analysis
 
-        -   Clustering Analysis (UPGMA; WPGMA; k-Means) - I mastered these techniques during my Graduation to perform Biogeographical Regionalization
+        -   Clustering Analysis (UPGMA; WPGMA) - I mastered these techniques during my Graduation to perform Biogeographical Regionalization
         -   Dimensionality Reduction Analysis (PCA)
 
 &nbsp;
@@ -66,9 +64,8 @@ I am especially interested and continuously developing my skills on:
 &nbsp;
 
 
--   Machine Learning Algorithms
-    -   Random Forests
-    -   Boosted Regression Trees
+-   Machine Learning Algorithms - still beginning on this topic
+
 
 &nbsp;
 &nbsp;
