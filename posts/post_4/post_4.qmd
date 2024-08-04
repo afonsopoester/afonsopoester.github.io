@@ -1,6 +1,6 @@
 ---
 title: "How do athletes perform in the next Olympics Edition after winning their first Gold Medal?"
-description: "Post description"
+description: "After the FIRST GOLD MEDAL, do athletes maintain the same result in the enxt Olympics edition"
 author: "João Afonso Poester-Carvalho"
 date: "8/4/2024"
 ---
