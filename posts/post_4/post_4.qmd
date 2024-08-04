@@ -1,0 +1,175 @@
+---
+title: "How do athletes perform in the next Olympics Edition after winning their first Gold Medal?"
+description: "Post description"
+author: "João Afonso Poester-Carvalho"
+date: "8/4/2024"
+---
+
+
+A Gold Medal in the Olympics is probably the highest an athlete can dream. While watching the 2024 Paris Olympic Games, and looking at some historic data, I tried to ask myself some questions that could be answered through creative data analysis. I thought about some medalists performance throughout multiple Olympic cicles, and asked myself: When athletes win their first Gold Medal, how do they perform in the next Olympics Edition? How often do they keep on the podium? Or do they even compete another edition?
+
+I tried to get some insight using data from [Olympedia](https://basedosdados.org/dataset/62f8cb83-ac37-48be-874b-b94dd92d3e2b?table=567b1ccd-d8c2-4616-bacb-cf5c0e7b8d89), downloaded from the brazilian project [Base dos Dados](https://basedosdados.org/).
+
+First things first: we read the data as CSV, extract the year the edition happened, and replace NAs in the Medal column as "No_Medal".
+
+``` {r}
+#| warning: false
+
+
+library(tidyverse)
+library(showtext)
+library(rstatix)
+font_add_google("Commissioner", "Commissioner")
+showtext_auto()
+
+athlete_result <- read_csv("athlete.csv") %>%
+  mutate(
+    edition_year = as.numeric(substr(edition, 0, 4))
+  ) %>%
+  replace_na(list(medal = "No_Medal"))
+athlete_result$medal <- factor(athlete_result$medal, levels = c("No_Medal", "Bronze", "Silver", "Gold"), ordered = TRUE) 
+``` 
+
+Further on, I filtered the data to have only the Summer Olympics edition, and made a dataset with the first time some athlete won the first gold medal of its career, and also added a value called "Next Edition", to later on join with the respective result of the next edition.
+
+
+``` {r}
+#| warning: false
+
+
+
+first_gold <- athlete_result %>%
+  filter(grepl("Summer", edition)) %>%
+  filter(edition_year != 2020) %>%
+  select(edition, edition_year, edition_id, country_noc, sport, athlete, athlete_id, medal, position) %>%
+  filter(medal == "Gold") %>%
+  group_by(athlete_id) %>%
+  slice_min(edition_year) %>%
+  unique() %>%
+  mutate(next_ed = edition_year + 4)
+```
+
+
+Finally, I changed the original dataset, calling the "Medal" column "Next Medal", so I could join that column with the one of the "First Gold" dataset. 
+
+
+``` {r}
+#| warning: false
+
+next_edition_medals <- athlete_result %>%
+  select(edition, edition_year, edition_id, country_noc, sport, athlete, athlete_id, medal, position) %>%
+  subset(athlete_id %in% first_gold$athlete_id)  %>%
+  mutate(next_ed = edition_year) %>%
+  select(next_ed, athlete_id, medal) 
+
+join <- first_gold %>%
+  left_join(next_edition_medals, by = c("athlete_id","next_ed")) %>%
+  replace_na(list(medal = "no_participation")) %>%
+  group_by(athlete_id) %>%
+  slice_max(medal.y) %>%
+  unique() %>%
+  ungroup() 
+
+df <- join %>%
+  rename("first_gold" = medal.x, "next_medal" = medal.y)
+
+```
+
+Now the dataset summarises the first time an athlete won a Gold Medal, and then the next edition the athlete participated, and the best result obtained - since some athletes win way more than one medal in one edition. One thing I did not control, however, is whether the athlete won a medal in the same category, or another. 
+
+And now to the first plot, I created a Waffle chart, representing the percentage of the results athletes get after winning their first Gold Medals. The plot on the left shows the general result, counting the athletes who did not participate in the next ediiton of the Olympics. The plot in the right, ignores those athletes. 
+
+``` {r}
+#| warning: false
+
+
+library(waffle)
+
+one_a <- df %>%
+  group_by(next_medal) %>%
+  summarise(
+    perc = round((n()/nrow(.))*100)
+  ) %>%
+  waffle() +
+  scale_fill_manual(labels = c("No Medal", "Bronze", "Silver", "Gold", "Did Not Participate"),
+                    values = c("orange", "#A77044", "#D7D7D7", "#FEE101", "red")) +
+  labs(
+    fill = "Best result after first Gold Medal"
+  )
+
+one_b <- df %>%
+  filter(next_medal != "no_participation") %>%
+  group_by(next_medal) %>%
+  summarise(
+    perc = round((n()/nrow(.))*100)
+  ) %>%
+  waffle() +
+  scale_fill_manual(labels = c("No Medal", "Bronze", "Silver", "Gold"),
+                    values = c("orange", "#A77044", "#D7D7D7", "#FEE101")) +
+  labs(
+    fill = "Best result after first Gold Medal"
+  )
+
+library(patchwork)
+
+title_one <- "Proportion of best results of athletes in the next Olympics edition after heir first Gold Medal"
+caption_one <- "Source: Olympedia"
+ 
+plot <- one_a / one_b 
+
+plot +
+  plot_annotation(
+    title = title_one,
+    caption = caption_one
+  ) +
+  theme(
+    plot.title = element_text(family = "Commissioner"),
+    plot.caption = element_text(family = "Commissioner")
+  )
+```
+
+Since I'm Brazilian, I also wanted to look to the familiar faces of Brazilian gold medalists. Here, I did not use percentage data. 
+
+```{r}
+#| warning: false
+ 
+title_two <- "Proportion of best results of brazilian athletes in the next Olympics edition after heir first Gold Medal"
+caption_two <- "Source: Olympedia"
+
+df %>%
+  filter(next_medal != "no_participation") %>%
+  filter(country_noc == "BRA") %>%
+  group_by(next_medal) %>%
+  summarise(
+    n()
+  ) %>%
+  waffle() +
+  scale_fill_manual(labels = c("No Medal", "Bronze", "Silver", "Gold"),
+                    values = c("orange", "#A77044", "#D7D7D7", "#FEE101")) +
+  labs(
+    fill = "Best result after first Gold Medal"
+  ) +
+  plot_annotation(
+    title = title_two,
+    caption = caption_two
+  ) +
+  theme(
+    plot.title = element_text(family = "Commissioner"),
+    plot.caption = element_text(family = "Commissioner")
+  )
+```
+
+Only nine brazilian athletes maintained Gold Medals in the next Olympics edition after their first Gold Medal. They are:
+
+``` {r}
+df %>%
+  filter(next_medal != "no_participation") %>%
+  filter(country_noc == "BRA") %>%
+  filter(next_medal == "Gold") %>%
+  select(athlete, sport)
+
+```
+
+That is it for this small exercise. I tried to ask a very objective question, and answer it with good data :)
+
+

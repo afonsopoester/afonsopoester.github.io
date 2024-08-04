@@ -1,9 +1,9 @@
 project:
   type: website
+  output-dir: docs
 
 website:
   title: "João Afonso Poester-Carvalho"
-  site-url: https://afonsopoester.github.io/
   navbar:
     background: info
     right:

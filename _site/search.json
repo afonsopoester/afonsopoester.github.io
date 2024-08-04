@@ -1,38 +1,45 @@
 [
   {
+    "objectID": "posts/post_3/post_3.html",
+    "href": "posts/post_3/post_3.html",
+    "title": "Board games average rating",
+    "section": "",
+    "text": "library(tidyverse)\n\nboard_games &lt;- readr::read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv\")\n\nboard_games %&gt;%\n  mutate(\n    decade = case_when(\n      year_published &gt;= 1950 & year_published &lt;=1959 ~ 1950,\n      year_published &gt;= 1960 & year_published &lt;=1969 ~ 1960,\n      year_published &gt;= 1970 & year_published &lt;=1979 ~ 1970,\n      year_published &gt;= 1980 & year_published &lt;=1989 ~ 1980,\n      year_published &gt;= 1990 & year_published &lt;=1999 ~ 1990,\n      year_published &gt;= 2000 & year_published &lt;=2009 ~ 2000,\n      year_published &gt;= 2010 & year_published &lt;=2019 ~ 2010,\n      year_published &gt;= 2020 ~ 2020,\n    )\n  ) %&gt;%\n  ggplot(aes(x = average_rating, fill = factor(decade))) +\n    geom_density() +\n    scale_y_continuous(\n      name = element_blank(),\n      breaks = NULL\n    ) +\n    scale_x_continuous(\n      name = \"Average Rating\",\n      breaks = c(0:10)\n    ) +\n    scale_fill_brewer(\n      name = \"Decade\",\n      palette = \"Set2\"\n    ) +\n    facet_wrap(~decade, ncol = 1) +\n    theme_minimal() +\n    labs(\n      title = \"Average Rating of Board Games Across Decades\"\n    ) +\n    theme(\n      plot.background = element_blank(),\n      panel.grid = element_blank()\n    )"
+  },
+  {
+    "objectID": "posts/post_3/post_3.html#board-games-average-rating",
+    "href": "posts/post_3/post_3.html#board-games-average-rating",
+    "title": "Board games average rating",
+    "section": "",
+    "text": "library(tidyverse)\n\nboard_games &lt;- readr::read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv\")\n\nboard_games %&gt;%\n  mutate(\n    decade = case_when(\n      year_published &gt;= 1950 & year_published &lt;=1959 ~ 1950,\n      year_published &gt;= 1960 & year_published &lt;=1969 ~ 1960,\n      year_published &gt;= 1970 & year_published &lt;=1979 ~ 1970,\n      year_published &gt;= 1980 & year_published &lt;=1989 ~ 1980,\n      year_published &gt;= 1990 & year_published &lt;=1999 ~ 1990,\n      year_published &gt;= 2000 & year_published &lt;=2009 ~ 2000,\n      year_published &gt;= 2010 & year_published &lt;=2019 ~ 2010,\n      year_published &gt;= 2020 ~ 2020,\n    )\n  ) %&gt;%\n  ggplot(aes(x = average_rating, fill = factor(decade))) +\n    geom_density() +\n    scale_y_continuous(\n      name = element_blank(),\n      breaks = NULL\n    ) +\n    scale_x_continuous(\n      name = \"Average Rating\",\n      breaks = c(0:10)\n    ) +\n    scale_fill_brewer(\n      name = \"Decade\",\n      palette = \"Set2\"\n    ) +\n    facet_wrap(~decade, ncol = 1) +\n    theme_minimal() +\n    labs(\n      title = \"Average Rating of Board Games Across Decades\"\n    ) +\n    theme(\n      plot.background = element_blank(),\n      panel.grid = element_blank()\n    )"
+  },
+  {
+    "objectID": "posts/post_1/post_1.html",
+    "href": "posts/post_1/post_1.html",
+    "title": "Brazilian Gradute Courses",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(janitor)\n\nlibrary(tidyverse)\nlibrary(janitor)\n\n\ncursos &lt;- read.csv(\"cursos_graduacao.csv\")\ncursos &lt;- cursos %&gt;%\n  clean_names() %&gt;%\n  pivot_longer(!c(ano), names_to = \"modalidade\", values_to = \"n\") %&gt;%\n  as.data.frame()\n\ncursos %&gt;% \n  group_by(ano) %&gt;%\n  mutate(perc = proportions(n)) %&gt;%\n  ggplot(aes(x = ano, y = perc, fill = modalidade)) +\n    geom_area() +\n    theme_minimal() +\n    scale_x_continuous(\n      name = \"Ano\",\n      breaks = c(2012:2022)\n    ) +\n    scale_y_continuous(\n      name = \"Porcentagem\",\n      labels = scales::percent\n    ) +\n    scale_fill_brewer(\n      name = \"Modalidade\",\n      palette = \"Dark2\",\n      labels = c(\"Bacharelado Presencial\", \"Bacharelado Distância\", \"Licenciatura Presencial\", \"Licenciatura Distância\", \"Tecnológico Presencial\", \"Tecnológico Distância\")\n    ) +\n    labs(\n      caption = \"Dados: Censo do Ensino Superior 2022 - INEP\"\n    ) +\n    theme(\n      plot.background = element_rect(fill = \"grey\", colour = NA),\n      plot.caption = element_text(hjust = -0.25) \n    )"
+  },
+  {
+    "objectID": "posts/post_1/post_1.html#brazilian-gradute-courses",
+    "href": "posts/post_1/post_1.html#brazilian-gradute-courses",
+    "title": "Brazilian Gradute Courses",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(janitor)\n\nlibrary(tidyverse)\nlibrary(janitor)\n\n\ncursos &lt;- read.csv(\"cursos_graduacao.csv\")\ncursos &lt;- cursos %&gt;%\n  clean_names() %&gt;%\n  pivot_longer(!c(ano), names_to = \"modalidade\", values_to = \"n\") %&gt;%\n  as.data.frame()\n\ncursos %&gt;% \n  group_by(ano) %&gt;%\n  mutate(perc = proportions(n)) %&gt;%\n  ggplot(aes(x = ano, y = perc, fill = modalidade)) +\n    geom_area() +\n    theme_minimal() +\n    scale_x_continuous(\n      name = \"Ano\",\n      breaks = c(2012:2022)\n    ) +\n    scale_y_continuous(\n      name = \"Porcentagem\",\n      labels = scales::percent\n    ) +\n    scale_fill_brewer(\n      name = \"Modalidade\",\n      palette = \"Dark2\",\n      labels = c(\"Bacharelado Presencial\", \"Bacharelado Distância\", \"Licenciatura Presencial\", \"Licenciatura Distância\", \"Tecnológico Presencial\", \"Tecnológico Distância\")\n    ) +\n    labs(\n      caption = \"Dados: Censo do Ensino Superior 2022 - INEP\"\n    ) +\n    theme(\n      plot.background = element_rect(fill = \"grey\", colour = NA),\n      plot.caption = element_text(hjust = -0.25) \n    )"
+  },
+  {
+    "objectID": "1_Publications.html",
+    "href": "1_Publications.html",
+    "title": "Publications",
+    "section": "",
+    "text": "Articles\n\nPoester-Carvalho, J. A.; Barão, K.; Costa, L. G.; Ferrari, A. (2023). Areas of endemism and sampling bias of Pentatomidae (Heteroptera) in the Americas. Journal of Insect Conservation, 27(5), 781–794."
+  },
+  {
     "objectID": "1_MAIN.html",
     "href": "1_MAIN.html",
     "title": "João Afonso Poester-Carvalho",
     "section": "",
     "text": "Hello, my name is João Afonso Poester-Carvalho and I am graduated in Biological Sciences (Universidade Federal do Rio Grande - FURG). During my Graduation, I focused on Biogeography and species distribution patterns (e.g. Poester-Carvalho et al. 2023), with different taxa as study systems. I am able to use techniques such as Endemicity Analysis and Hierarchical Clustering to better understand species distribution patterns across the Neotropics. Currently, I am a Masters Student researching community ecology and ecophysiological resposes of dormant invertebrate stages.\nDuring much of my graduation, I focused on studying programming and GIS tools to solve problems associated with my work.\nRStats is one of my main interests of study. I am continuously trying to evolve my skills with Spatial Analysis and especially Statistical Analysis.\nI am much interested in studying Statistical and Machine Learning Models and their applications to ecological data, especially to conservation focus.\nCurrently, I have been trying to develop small projects with the skills I learn, such as analysis employing various Statistical Tools."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
-  },
-  {
-    "objectID": "2_Porfolio.html",
-    "href": "2_Porfolio.html",
-    "title": "Portfolio and Exercises",
-    "section": "",
-    "text": "In my GitHub pages I developed some small coding exercises. Most of these are applications of algorithms I have studied or projects from websites such as Kaggle or DataCamp."
-  },
-  {
-    "objectID": "0_Blog.html",
-    "href": "0_Blog.html",
-    "title": "Portfolio",
-    "section": "",
-    "text": "This is a blog\n\nAll Blog Posts\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMy Post\n\n\n\n\n\nPost description\n\n\n\n\n\nAug 2, 2024\n\n\nJoão Afonso Poester-Carvalho\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "docs/2_Porfolio.html",
-    "href": "docs/2_Porfolio.html",
-    "title": "Portfolio and Exercises",
-    "section": "",
-    "text": "In my GitHub pages I developed some small coding exercises. Most of these are applications of algorithms I have studied or projects from websites such as Kaggle or DataCamp."
   },
   {
     "objectID": "1_MAIN.html#skills",
@@ -42,32 +49,11 @@
     "text": "Skills\nI am especially interested and continuously developing my skills on:\n\nR Programming\n\nGeneral data wrangling problems - I particularly like this\nGeneral dataviz techniques (working on these in my GitHub page!)\nQuarto projects (such as this website!)\nInteractive reports (Reactable; Leaflet)\nIntegration with Git and Github (version control, etc.)\nDeploying websites with GitHub Pages (I am currently developing a publication with a dashboard for species distribution)\n\n\n       \n\nQGIS and R map building\n\nManipulation of spatial data in R\nUsing the “sf” package in R\n\n\n       \n\nStatistical techniques:\n\nInferential Analysis\nSimple and Multivariate Linear Models\nSimple and Multivariate Generalized Linear Models\nMixed Models\nMultivariate Clustering and Ordination Analysis\n\nClustering Analysis (UPGMA; WPGMA; k-Means) - I mastered these techniques during my Graduation to perform Biogeographical Regionalization\nDimensionality Reduction Analysis (PCA)\n\n\n\n       \n\nMachine Learning Algorithms\n\nRandom Forests\nBoosted Regression Trees\n\n\n       \n\nCommunity Ecology, Macroecology and Biogeography\n\nSpecies Occurences Databases Cleaning (e.g. Ecology Datapapers)\nGBIF Data\nTrait Data\n\nEcological Niche Modelling\n\nCurrently developing myself on this topic, especially working with the “SDM” R package"
   },
   {
-    "objectID": "2_Porfolio.html#brazilian-gradute-courses",
-    "href": "2_Porfolio.html#brazilian-gradute-courses",
-    "title": "Portfolio and Exercises",
-    "section": "Brazilian Gradute Courses",
-    "text": "Brazilian Gradute Courses\n\nlibrary(tidyverse)\nlibrary(janitor)\n\nlibrary(tidyverse)\nlibrary(janitor)\n\n\ncursos &lt;- read.csv(\"portfolio_data/cursos_graduacao.csv\")\ncursos &lt;- cursos %&gt;%\n  clean_names() %&gt;%\n  pivot_longer(!c(ano), names_to = \"modalidade\", values_to = \"n\") %&gt;%\n  as.data.frame()\n\ncursos %&gt;% \n  group_by(ano) %&gt;%\n  mutate(perc = proportions(n)) %&gt;%\n  ggplot(aes(x = ano, y = perc, fill = modalidade)) +\n    geom_area() +\n    theme_minimal() +\n    scale_x_continuous(\n      name = \"Ano\",\n      breaks = c(2012:2022)\n    ) +\n    scale_y_continuous(\n      name = \"Porcentagem\",\n      labels = scales::percent\n    ) +\n    scale_fill_brewer(\n      name = \"Modalidade\",\n      palette = \"Dark2\",\n      labels = c(\"Bacharelado Presencial\", \"Bacharelado Distância\", \"Licenciatura Presencial\", \"Licenciatura Distância\", \"Tecnológico Presencial\", \"Tecnológico Distância\")\n    ) +\n    labs(\n      caption = \"Dados: Censo do Ensino Superior 2022 - INEP\"\n    ) +\n    theme(\n      plot.background = element_rect(fill = \"grey\", colour = NA),\n      plot.caption = element_text(hjust = -0.25) \n    )"
-  },
-  {
-    "objectID": "2_Porfolio.html#premier-league-teams-home-and-away",
-    "href": "2_Porfolio.html#premier-league-teams-home-and-away",
-    "title": "Portfolio and Exercises",
-    "section": "Premier League teams home and away",
-    "text": "Premier League teams home and away\n\nlibrary(tidyverse)\nlibrary(ggbump)\n\nsoccer &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-04-04/soccer21-22.csv')\n\naway_vic &lt;- soccer %&gt;%\n  group_by(AwayTeam) %&gt;%\n  summarise(vic_away = sum(FTR == \"A\")) %&gt;%\n  arrange(desc(vic_away)) %&gt;%\n  rownames_to_column(var = \"vic_away_rank\") %&gt;%\n  rename(team = AwayTeam) %&gt;%\n  select(-vic_away)\n  \n\nhome_vic &lt;- soccer %&gt;%\n  group_by(HomeTeam) %&gt;%\n  summarise(vic_home = sum(FTR == \"H\")) %&gt;%\n  arrange(desc(vic_home)) %&gt;%\n  rownames_to_column(var = \"vic_home_rank\") %&gt;%\n  rename(team = HomeTeam) %&gt;%\n  select(-vic_home)\n\nvictories &lt;- merge(home_vic, away_vic, by = \"team\") %&gt;%\n  mutate(\n    vic_home_rank = as.numeric(vic_home_rank),\n    vic_away_rank = as.numeric(vic_away_rank)\n  ) %&gt;%\n  arrange(vic_home_rank) %&gt;%\n  pivot_longer(\n    cols = c(\"vic_home_rank\", \"vic_away_rank\"),\n    names_to = \"home_away\",\n    values_to = \"rank\"\n  ) %&gt;%\n  mutate(\n    home_away_enc = as.integer(fct_rev(factor(home_away)))\n  )\n\nvictories %&gt;%\n  ggplot(aes(home_away_enc, rank, col = team)) +\n  geom_point(shape = \"|\", stroke = 5) +\n  ggbump::geom_bump(linewidth = 1.5) +\n  geom_text(\n    data = victories %&gt;% filter(home_away_enc == 1),\n    aes(label = team),\n    hjust = 1,\n    nudge_x = -0.1,\n    size = 4,\n    fontface = \"bold\"\n  ) +\n  geom_text(\n    data = victories %&gt;% filter(home_away_enc == 2),\n    aes(label = team),\n    hjust = 0,\n    nudge_x = 0.1,\n    size = 4,\n    fontface = \"bold\"\n  ) +\n  scale_y_reverse(breaks = 1:20) +\n  scale_x_continuous(breaks = 1:2, labels = c(\"Victories Home Rank\", \"Victories Away Rank\")) +\n  coord_cartesian(xlim = c(0.5, 2.5)) +\n  theme_minimal() +\n  labs(\n    title = \"Best defenders vs best visitors in Premier League 21/22\",\n    caption = \"2023-04-04 Tidytuesday data\"\n  ) +\n  theme(\n    axis.title = element_blank(),\n    \n    plot.background = element_rect(fill = \"#f5ede4\", colour = NA),\n    plot.margin = margin(t = 2, b =4, l = 5, r = 5, unit = \"mm\"),\n    \n    panel.grid = element_blank(),\n    \n    legend.position = \"none\"\n  )"
-  },
-  {
-    "objectID": "2_Porfolio.html#board-games-average-rating",
-    "href": "2_Porfolio.html#board-games-average-rating",
-    "title": "Portfolio and Exercises",
-    "section": "Board games average rating",
-    "text": "Board games average rating\n\nlibrary(tidyverse)\n\nboard_games &lt;- readr::read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv\")\n\nboard_games %&gt;%\n  mutate(\n    decade = case_when(\n      year_published &gt;= 1950 & year_published &lt;=1959 ~ 1950,\n      year_published &gt;= 1960 & year_published &lt;=1969 ~ 1960,\n      year_published &gt;= 1970 & year_published &lt;=1979 ~ 1970,\n      year_published &gt;= 1980 & year_published &lt;=1989 ~ 1980,\n      year_published &gt;= 1990 & year_published &lt;=1999 ~ 1990,\n      year_published &gt;= 2000 & year_published &lt;=2009 ~ 2000,\n      year_published &gt;= 2010 & year_published &lt;=2019 ~ 2010,\n      year_published &gt;= 2020 ~ 2020,\n    )\n  ) %&gt;%\n  ggplot(aes(x = average_rating, fill = factor(decade))) +\n    geom_density() +\n    scale_y_continuous(\n      name = element_blank(),\n      breaks = NULL\n    ) +\n    scale_x_continuous(\n      name = \"Average Rating\",\n      breaks = c(0:10)\n    ) +\n    scale_fill_brewer(\n      name = \"Decade\",\n      palette = \"Set2\"\n    ) +\n    facet_wrap(~decade, ncol = 1) +\n    theme_minimal() +\n    labs(\n      title = \"Average Rating of Board Games Across Decades\"\n    ) +\n    theme(\n      plot.background = element_blank(),\n      panel.grid = element_blank()\n    )"
-  },
-  {
-    "objectID": "1_Publications.html",
-    "href": "1_Publications.html",
-    "title": "Publications",
+    "objectID": "2_Blog.html",
+    "href": "2_Blog.html",
+    "title": "Portfolio",
     "section": "",
-    "text": "Articles\n\nPoester-Carvalho, J. A.; Barão, K.; Costa, L. G.; Ferrari, A. (2023). Areas of endemism and sampling bias of Pentatomidae (Heteroptera) in the Americas. Journal of Insect Conservation, 27(5), 781–794."
+    "text": "In my GitHub pages I developed some small coding exercises. Most of these are applications of algorithms I have studied or projects from websites such as Kaggle or DataCamp.\nI structured these projects as Blog Posts, using the Quarto Blog strucure.\nMostly, these are some Data Storytelling examples!\n               \n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHow do athletes perform in the next Olympics Edition after winning their first Gold Medal?\n\n\n\n\n\nPost description\n\n\n\n\n\nAug 3, 2024\n\n\nJoão Afonso Poester-Carvalho\n\n\n\n\n\n\n\n\n\n\n\n\nSpiders Sexual Dimorphism\n\n\n\n\n\nPost description\n\n\n\n\n\nAug 2, 2024\n\n\nJoão Afonso Poester-Carvalho\n\n\n\n\n\n\n\n\n\n\n\n\nBrazilian Gradute Courses\n\n\n\n\n\nPost description\n\n\n\n\n\nAug 2, 2024\n\n\nJoão Afonso Poester-Carvalho\n\n\n\n\n\n\n\n\n\n\n\n\nPremier League teams home and away\n\n\n\n\n\nPost description\n\n\n\n\n\nAug 2, 2024\n\n\nJoão Afonso Poester-Carvalho\n\n\n\n\n\n\n\n\n\n\n\n\nBoard games average rating\n\n\n\n\n\nPost description\n\n\n\n\n\nAug 2, 2024\n\n\nJoão Afonso Poester-Carvalho\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/post_0/post_0.html",
@@ -82,5 +68,26 @@
     "title": "My Post",
     "section": "",
     "text": "Exercise from the incredible book “Analises Ecológicas no R”\n\nlibrary(ggpubr)\nlibrary(tidyverse)\nlibrary(ecodados)\n\nspider &lt;- Cap7_exercicio1\n\nt.test(Tamanho ~ Sexo, data = spider, var.equal = TRUE)\n\n\n    Two Sample t-test\n\ndata:  Tamanho by Sexo\nt = 2.2756, df = 28, p-value = 0.03072\nalternative hypothesis: true difference in means between group f and group m is not equal to 0\n95 percent confidence interval:\n 0.2356113 4.4843887\nsample estimates:\nmean in group f mean in group m \n          10.08            7.72 \n\n\n\nspider %&gt;%\n  ggplot(aes(x = Sexo, y = Tamanho, color = Sexo)) +\n  geom_boxplot(fill = c(\"darkorange\", \"cyan4\"), color = \"black\") +\n  geom_jitter(shape = 16, cex = 5, color = \"black\") +\n  scale_x_discrete(name = \"Sex\",\n                   labels = c(\"Female\", \"Male\")) +\n  scale_y_continuous(\n    name = \"Size\"\n  ) +\n  theme_bw() +\n  stat_compare_means(method = \"t.test\",\n                     label.x = 1.4,\n                     label.y = 14)"
+  },
+  {
+    "objectID": "posts/post_2/post_2.html",
+    "href": "posts/post_2/post_2.html",
+    "title": "Premier League teams home and away",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(ggbump)\n\nsoccer &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-04-04/soccer21-22.csv')\n\naway_vic &lt;- soccer %&gt;%\n  group_by(AwayTeam) %&gt;%\n  summarise(vic_away = sum(FTR == \"A\")) %&gt;%\n  arrange(desc(vic_away)) %&gt;%\n  rownames_to_column(var = \"vic_away_rank\") %&gt;%\n  rename(team = AwayTeam) %&gt;%\n  select(-vic_away)\n  \n\nhome_vic &lt;- soccer %&gt;%\n  group_by(HomeTeam) %&gt;%\n  summarise(vic_home = sum(FTR == \"H\")) %&gt;%\n  arrange(desc(vic_home)) %&gt;%\n  rownames_to_column(var = \"vic_home_rank\") %&gt;%\n  rename(team = HomeTeam) %&gt;%\n  select(-vic_home)\n\nvictories &lt;- merge(home_vic, away_vic, by = \"team\") %&gt;%\n  mutate(\n    vic_home_rank = as.numeric(vic_home_rank),\n    vic_away_rank = as.numeric(vic_away_rank)\n  ) %&gt;%\n  arrange(vic_home_rank) %&gt;%\n  pivot_longer(\n    cols = c(\"vic_home_rank\", \"vic_away_rank\"),\n    names_to = \"home_away\",\n    values_to = \"rank\"\n  ) %&gt;%\n  mutate(\n    home_away_enc = as.integer(fct_rev(factor(home_away)))\n  )\n\nvictories %&gt;%\n  ggplot(aes(home_away_enc, rank, col = team)) +\n  geom_point(shape = \"|\", stroke = 5) +\n  ggbump::geom_bump(linewidth = 1.5) +\n  geom_text(\n    data = victories %&gt;% filter(home_away_enc == 1),\n    aes(label = team),\n    hjust = 1,\n    nudge_x = -0.1,\n    size = 4,\n    fontface = \"bold\"\n  ) +\n  geom_text(\n    data = victories %&gt;% filter(home_away_enc == 2),\n    aes(label = team),\n    hjust = 0,\n    nudge_x = 0.1,\n    size = 4,\n    fontface = \"bold\"\n  ) +\n  scale_y_reverse(breaks = 1:20) +\n  scale_x_continuous(breaks = 1:2, labels = c(\"Victories Home Rank\", \"Victories Away Rank\")) +\n  coord_cartesian(xlim = c(0.5, 2.5)) +\n  theme_minimal() +\n  labs(\n    title = \"Best defenders vs best visitors in Premier League 21/22\",\n    caption = \"2023-04-04 Tidytuesday data\"\n  ) +\n  theme(\n    axis.title = element_blank(),\n    \n    plot.background = element_rect(fill = \"#f5ede4\", colour = NA),\n    plot.margin = margin(t = 2, b =4, l = 5, r = 5, unit = \"mm\"),\n    \n    panel.grid = element_blank(),\n    \n    legend.position = \"none\"\n  )"
+  },
+  {
+    "objectID": "posts/post_2/post_2.html#premier-league-teams-home-and-away",
+    "href": "posts/post_2/post_2.html#premier-league-teams-home-and-away",
+    "title": "Premier League teams home and away",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(ggbump)\n\nsoccer &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-04-04/soccer21-22.csv')\n\naway_vic &lt;- soccer %&gt;%\n  group_by(AwayTeam) %&gt;%\n  summarise(vic_away = sum(FTR == \"A\")) %&gt;%\n  arrange(desc(vic_away)) %&gt;%\n  rownames_to_column(var = \"vic_away_rank\") %&gt;%\n  rename(team = AwayTeam) %&gt;%\n  select(-vic_away)\n  \n\nhome_vic &lt;- soccer %&gt;%\n  group_by(HomeTeam) %&gt;%\n  summarise(vic_home = sum(FTR == \"H\")) %&gt;%\n  arrange(desc(vic_home)) %&gt;%\n  rownames_to_column(var = \"vic_home_rank\") %&gt;%\n  rename(team = HomeTeam) %&gt;%\n  select(-vic_home)\n\nvictories &lt;- merge(home_vic, away_vic, by = \"team\") %&gt;%\n  mutate(\n    vic_home_rank = as.numeric(vic_home_rank),\n    vic_away_rank = as.numeric(vic_away_rank)\n  ) %&gt;%\n  arrange(vic_home_rank) %&gt;%\n  pivot_longer(\n    cols = c(\"vic_home_rank\", \"vic_away_rank\"),\n    names_to = \"home_away\",\n    values_to = \"rank\"\n  ) %&gt;%\n  mutate(\n    home_away_enc = as.integer(fct_rev(factor(home_away)))\n  )\n\nvictories %&gt;%\n  ggplot(aes(home_away_enc, rank, col = team)) +\n  geom_point(shape = \"|\", stroke = 5) +\n  ggbump::geom_bump(linewidth = 1.5) +\n  geom_text(\n    data = victories %&gt;% filter(home_away_enc == 1),\n    aes(label = team),\n    hjust = 1,\n    nudge_x = -0.1,\n    size = 4,\n    fontface = \"bold\"\n  ) +\n  geom_text(\n    data = victories %&gt;% filter(home_away_enc == 2),\n    aes(label = team),\n    hjust = 0,\n    nudge_x = 0.1,\n    size = 4,\n    fontface = \"bold\"\n  ) +\n  scale_y_reverse(breaks = 1:20) +\n  scale_x_continuous(breaks = 1:2, labels = c(\"Victories Home Rank\", \"Victories Away Rank\")) +\n  coord_cartesian(xlim = c(0.5, 2.5)) +\n  theme_minimal() +\n  labs(\n    title = \"Best defenders vs best visitors in Premier League 21/22\",\n    caption = \"2023-04-04 Tidytuesday data\"\n  ) +\n  theme(\n    axis.title = element_blank(),\n    \n    plot.background = element_rect(fill = \"#f5ede4\", colour = NA),\n    plot.margin = margin(t = 2, b =4, l = 5, r = 5, unit = \"mm\"),\n    \n    panel.grid = element_blank(),\n    \n    legend.position = \"none\"\n  )"
+  },
+  {
+    "objectID": "posts/post_4/post_4.html",
+    "href": "posts/post_4/post_4.html",
+    "title": "How do athletes perform in the next Olympics Edition after winning their first Gold Medal?",
+    "section": "",
+    "text": "A Gold Medal in the Olympics is probably the highest an athlete can dream. While watching the 2024 Paris Olympic Games, and looking at some historic data, I tried to ask myself some questions that could be answered through creative data analysis. I thought about some medalists performance throughout multiple Olympic cicles, and asked myself: When athletes win their first Gold Medal, how do they perform in the next Olympics Edition? How often do they keep on the podium? Or do they even compete another edition?\nI tried to get some insight using data from Olympedia []…\nFirst things first:\nFurther on…\nFinally….\nAnd now to the first plot:\n\nlibrary(waffle)\n\nWarning: pacote 'waffle' foi compilado no R versão 4.4.1\n\ndf %&gt;%\n  filter(next_medal != \"no_participation\") %&gt;%\n  group_by(next_medal) %&gt;%\n  summarise(\n    perc = round((n()/nrow(.))*100)\n  ) %&gt;%\n  waffle()\n\n\n\n\n\n\n\n\nSince I’m Brazilian, I also wanted to look to the familiar faces of Brazilian gold medalists.\n\ndf %&gt;%\n  filter(next_medal != \"no_participation\") %&gt;%\n  filter(country_noc == \"BRA\") %&gt;%\n  group_by(next_medal) %&gt;%\n  summarise(\n    n()\n  ) %&gt;%\n  waffle()"
   }
 ]
