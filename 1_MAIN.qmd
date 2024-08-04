@@ -49,9 +49,9 @@ I am especially interested and continuously developing my skills on:
 -   Statistical techniques:
     -   Inferential Analysis
 
-    -   Simple and Multivariate Linear Models
+        -   Simple and Multivariate Linear Models
 
-    -   Simple and Multivariate Generalized Linear Models
+        -   Simple and Multivariate Generalized Linear Models
 
     -   Multivariate Clustering and Ordination Analysis
 
