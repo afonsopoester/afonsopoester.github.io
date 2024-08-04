@@ -28,9 +28,6 @@ athlete_result <- read_csv("athlete.csv") %>%
   ) %>%
   replace_na(list(medal = "No_Medal"))
 athlete_result$medal <- factor(athlete_result$medal, levels = c("No_Medal", "Bronze", "Silver", "Gold"), ordered = TRUE) 
-
-
-unique(factor(athlete_result$edition_year))
 ``` 
 
 Further on, I filtered the data to have only the Summer Olympics edition, and made a dataset with the first time some athlete won the first gold medal of its career, and also added a value called "Next Edition", to later on join with the respective result of the next edition. I considered the two occasion when the Olympics where not held 4 years after the previous one: 1920 and 1948.
