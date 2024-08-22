@@ -1,0 +1,99 @@
+---
+title: "Recent ATP Rank 1 Men Tennis Players"
+description: "How can we visualize the evolution of the ATP Rank 1 Men Tennis Players?"
+author: "João Afonso Poester-Carvalho"
+date: "8/22/2024"
+---
+
+Hi, this time I tried to analyse some Tennis data. 
+I obtained a dataset of ATP points, and turned it into a dataset of Rank 1 players and the dates they were Rank 1.
+
+``` {r}
+#| warning: false
+
+
+library(tidyverse)
+library(ggalt)
+library(sysfonts)
+library(showtext)
+
+atp <- read_csv("ATP_Rankings_1990-2019.csv")
+
+font_add_google("Merriweather Sans", regular.wt = 400, family = "merri")
+showtext_auto(enable = TRUE)
+
+```
+
+Now let's process the data to obtain what we want.
+
+``` {r}
+#| warning: false
+
+
+rank_1 <- atp %>%
+  filter(Points > 0) %>%
+  mutate(Date = lubridate::as_date(Date))  %>%
+  group_by(Date) %>%
+  slice_max(Points) %>%
+  arrange(Date) %>%
+  ungroup() %>%
+    mutate(Rank1_Change = Player != lag(Player, default = first(Player))) %>% 
+    group_by(Player) %>%
+    mutate(Group = cumsum(Rank1_Change)) %>%
+    group_by(Player, Group) %>%
+    summarize(
+      First_Day = min(Date),
+      Last_Day = max(Date)
+    ) %>%
+    ungroup() %>%
+    select(-Group) 
+
+rank_1
+```
+
+
+These two objects will help with the plot.
+
+``` {r}
+players <- rank_1 %>% 
+  select(Player) %>%
+  arrange(desc(Player)) %>%
+  unique() %>%
+  as.vector() %>%
+  unlist() 
+
+names <- rank_1 %>%
+  group_by(Player) %>%
+  slice_min(First_Day)
+
+```
+
+Now, we make our plot, using a Dumbell chart!
+
+``` {r}
+#| warning: false
+#| fig-width: 10
+#| fig-height: 5
+
+rank_1 %>%
+  ggplot() +
+    geom_dumbbell(aes(x = First_Day, xend = Last_Day, y = factor(Player, players)), size = 0.5, 
+                  colour_x = "#7bc133", colour_xend = "#7bc133", fill = "#7bc133", colour = "#7bc133") +
+    geom_text(data = names, 
+              aes(x = First_Day, y = factor(Player, players), label = factor(Player, players), hjust = 1.2),
+              family = "merri", colour = "white", size = 7.5) +
+    scale_x_date(expand = c(0.3,0), breaks = seq(as.Date("1996-01-01"), as.Date("2020-01-01"), by = "year"),
+                 date_labels = "%Y") +
+    theme_minimal() +
+    theme(axis.text.y = element_blank(),
+          axis.title.y = element_blank(),
+          panel.grid = element_blank(),
+          axis.title.x = element_blank(),
+          axis.text.x = element_text(family = "merri", colour = "white", size = 13),
+          plot.background = element_rect(fill = "black", colour = "black"),
+          plot.title = element_text(family = "merri", colour = "white", size = 25)) +
+    labs(
+      title = "Rank 1 Men Tennis Players from 1996 to 2019",
+      caption = "Source: Kaggle and ATP Tour"
+    )
+```    
