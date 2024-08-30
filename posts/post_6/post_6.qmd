@@ -1,0 +1,270 @@
+---
+title: "Predicting number of points of NBA players in the regular season"
+description: "Applying machine learning to NBA data"
+author: "João Afonso Poester-Carvalho"
+date: "8/30/2024"
+---
+
+Hello, this time, I will try to develop a regression model with Tidymodels, a framework I've been studying recently. We will analyse NBA data from Kaggle. I developed much of this code adapting blog posts from [Julia Silge](https://juliasilge.com/), which have been helping me to understand the initial steps to tidy modelling. 
+
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+
+``` {r}
+#| warning: false
+
+
+library(tidyverse)
+library(tidymodels)
+
+## NBA ----
+
+## Predict the number of points of a player in the regular season 
+
+
+nba <- read_csv("nba.csv")
+
+nba_f <- nba %>%
+  filter(Season_type == "Regular%20Season") %>%
+  select(
+    PTS, year, PLAYER_ID, TEAM_ID, GP, MIN, FG_PCT, FG3_PCT, FT_PCT, OREB, DREB, AST, STL, BLK, TOV, PF
+  ) %>%
+  mutate(
+    PLAYER_ID = as.character(PLAYER_ID),
+    TEAM_ID = as.character(TEAM_ID),
+    year = as.numeric(substr(year, 1, 4))
+  ) 
+
+glimpse(nba_f)
+
+```
+
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+
+First step: use tidymodels functions to separate the train and test datasets and create a vfold object.
+
+``` {r}
+#| warning: false
+
+
+## Data Split ----
+
+set.seed(502)
+nba_split <- initial_split(nba_f, prop = 0.80, strata = PTS)
+nba_train <- training(nba_split)
+nba_test  <-  testing(nba_split)
+
+nba_folds <- nba_train %>%
+  vfold_cv(v = 5, repeats = 1, strata = PTS)
+```
+
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+
+Next, we begin to build a recipe, begining with the formula. The variable PLAYER_ID was set as an ID. 
+Finally, we normalize numeric variables and encode categorical variables. 
+
+``` {r}
+## Model formula ----
+form <- as.formula(paste("PTS"," ~ ", "."))
+
+## Model recipe ----
+
+mod_recipe <- recipe(formula = form, data = nba_train) %>%
+  update_role(PLAYER_ID, new_role = "id") %>%
+  step_normalize(all_numeric_predictors()) %>%
+  step_dummy(all_predictors(), -all_numeric(), one_hot = F)
+
+mod_recipe_prep <- prep(mod_recipe, retain = T)
+mod_recipe_prep
+```
+
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+
+Let's look how the data is transformed when the recipe is applied:
+
+``` {r}
+mod_recipe_prep %>% bake(new_data = NULL) %>% glimpse()
+```
+
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+
+Then, we define the LASSO regression model with the "glmnet" package and add it to a workflow object, along with the recipe. We also create a tunning grid, which will have the parameter "penalty" as the parameter we want to tune when we fit the first model.
+
+``` {r}
+#| warning: false
+## Define model ----
+
+reg_model <- linear_reg(penalty = tune(), mixture = 1) %>%
+  set_engine("glmnet")
+
+## Grid ----
+lambda_grid <- grid_regular(penalty(), levels = 50)
+
+## Start workflow ----
+
+reg_wf <- 
+  workflow() %>%
+  add_model(reg_model)  %>%
+  add_recipe(mod_recipe)
+reg_wf
+```
+
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+
+Now, we fit the model with the k fold cross validation scheme defined earlier. 
+The tune_grid() function receives the workflow, the ressampling scheme and the grid for the lambda parameter.
+
+``` {r}
+#| warning: false
+## Fit with Tune Grid ----
+lasso_grid <- tune_grid(
+  reg_wf, 
+  resamples = nba_folds,
+  grid = lambda_grid,  
+  metrics = metric_set(rmse, mae, rsq)
+)
+lasso_grid
+```
+
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+
+For each fold, the tune grid object holds the metrics obtained and we can plot the metrics considering the varible penalty.
+
+``` {r}
+## Metrics ----
+
+lasso_grid %>%
+  collect_metrics() %>%
+  ggplot(aes(penalty, mean, color = .metric)) +
+  geom_errorbar(aes(ymin = mean - std_err, ymax = mean + std_err), alpha = 0.5) +
+  geom_line(size = 1.5) +
+  facet_wrap(~.metric, scales = "free") +
+  scale_x_log10() +
+  theme(legend.position = "none") +
+  theme_bw()
+
+``` 
+
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+
+The performance of the model seems to get very slightly better with the LASSO penalty. 
+So, we pull the best model from the tune grid object, based on the RMSE.
+The finalize_workflow() function unites the original workflow with the best model.
+
+``` {r}
+
+lowest_rmse <- lasso_grid %>%
+  select_best(metric = "rmse")
+
+final_lasso <- finalize_workflow(
+  reg_wf,
+  lowest_rmse
+)
+
+final_lasso
+
+```
+
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+
+We then apply the model one last time to the training and testing data, using the last_fit() function. 
+
+``` {r}
+
+last_fit_lasso <- last_fit(
+  final_lasso,
+  nba_split
+) %>%
+  collect_metrics()
+
+last_fit_lasso
+
+```
